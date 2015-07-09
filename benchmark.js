@@ -54,7 +54,7 @@
   var contextProps = [
     'Array', 'Date', 'Function', 'Math', 'Object', 'RegExp', 'String', '_',
     'clearTimeout', 'chrome', 'chromium', 'document', 'java', 'navigator',
-    'performance', 'phantom', 'platform', 'process', 'runtime', 'setTimeout'
+    'phantom', 'platform', 'process', 'runtime', 'setTimeout'
   ];
 
   /** Used to avoid hz of Infinity. */
@@ -1817,11 +1817,6 @@
 
       /*----------------------------------------------------------------------*/
 
-      // Detect context.performance, builtin high-resolution timer.
-      if ((timer.ns = context.performance) && timer.ns.now) {
-        timers.push({ 'ns': timer.ns, 'res': getRes('ms'), 'unit': 'ms' });
-      }
-
       // Detect nanosecond support from a Java applet.
       _.find(doc && _.union(doc.applets, doc.embeds, doc.getElementsByTagName('object')) || [], function(element) {
         return timer.ns = applet = 'nanoTime' in element && element;
@@ -1851,7 +1846,6 @@
       if (microtimeObject && typeof (timer.ns = microtimeObject.now) == 'function') {
         timers.push({ 'ns': timer.ns,  'res': getRes('us'), 'unit': 'us' });
       }
-
       // Pick timer with highest resolution.
       timer = (_.minBy || _.min)(timers, 'res');
 
